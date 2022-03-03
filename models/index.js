@@ -6,19 +6,19 @@ const User = require('./User');
 
 // create associations
 User.hasMany(Post, {
-  foreignKey: 'user_id'
+  foreignKey: 'to_user_id'
 });
 
 Post.belongsTo(User, {
-  foreignKey: 'user_id',
-  onDelete: 'SET NULL'
+  foreignKey: 'to_user_id',
+  onDelete: 'CASCADE'
 });
 
-Post.belongsToOne(User, {
+Post.belongsTo(User, {
   through: User,
   as: 'Shared Meme',
   foreignKey: 'post_id',
-  onDelete: 'SET NULL'
+  onDelete: 'CASCADE'
 });
 
 
