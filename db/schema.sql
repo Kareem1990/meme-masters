@@ -1,3 +1,3 @@
-DROP DATABASE IF EXISTS newsfeed_db;
+DROP DATABASE IF EXISTS mememasters_db;
 
-CREATE DATABASE newsfeed_db;
+CREATE DATABASE mememasters_db;
