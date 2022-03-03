@@ -2,8 +2,8 @@ const { Model, DataTypes } = require('sequelize');
 const sequelize = require('../config/connection');
 // create our Post model
 class Post extends Model {
-  static upvote(body, models) {
-    return models.Vote.create({
+  static meme(body, models) {
+    return models.Post.create({
       user_id: body.user_id,
       post_id: body.post_id
     }).then(() => {
@@ -15,13 +15,13 @@ class Post extends Model {
           'id',
           'post_url',
           'title',
-          'created_at',
-          [sequelize.literal('(SELECT COUNT(*) FROM vote WHERE post.id = vote.post_id)'), 'vote_count']
+          'posted_by',
+          [sequelize.literal('(SELECT COUNT(*) FROM vote WHERE post.id = meme.post_id)') ]
         ],
         include: [
           {
             model: models.Comment,
-            attributes: ['id', 'comment_text', 'post_id', 'user_id', 'created_at'],
+            attributes: ['id', 'comment_text', 'post_id', 'user_id', 'posted_by'],
             include: {
               model: models.User,
               attributes: ['username']
