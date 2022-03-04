@@ -13,7 +13,7 @@ Post.init(
       primaryKey: true,
       autoIncrement: true
     },
-    img_url: {
+    image_url: {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
