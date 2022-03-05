@@ -7,7 +7,7 @@ class Post extends Model {}
 // create fields/columns for Post model
 Post.init(
   {
-    post_id: {
+    id: {
       type: DataTypes.INTEGER,
       allowNull: false,
       primaryKey: true,
