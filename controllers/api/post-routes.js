@@ -59,7 +59,7 @@ router.get('/:id', (req, res) => {
 });
 
 router.post('/', (req, res) => {
-  // expects {title: 'Taskmaster goes public!', img_url: 'https://taskmaster.com/press', user_id: 1}
+  // expects {title: 'Meme-masters goes public!', img_url: 'https://meme-masters.com/press', user_id: 1}
   Post.create({
     title: req.body.title,
     img_url: req.body.img_url,
