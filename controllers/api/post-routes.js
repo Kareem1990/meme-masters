@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const sequelize = require('../../config/connection');
-const { Post, User} = require('../../models');
+const { Post, User } = require('../../models');
 const withAuth = require('../../utils/auth');
 
 // get all users
@@ -58,18 +58,27 @@ router.get('/:id', (req, res) => {
     });
 });
 
-router.post('/', (req, res) => {
-  // expects {title: 'Taskmaster goes public!', img_url: 'https://taskmaster.com/press', user_id: 1}
-  Post.create({
-    title: req.body.title,
-    img_url: req.body.img_url,
-    user_id: req.session.user_id
-  })
-    .then(dbPostData => res.json(dbPostData))
-    .catch(err => {
-      console.log(err);
-      res.status(500).json(err);
-    });
+router.post('/', async (req, res) => {
+  try {
+    const to_user = await User.findOne({
+      where: {
+        email: req.body.to_email
+      }
+
+    })
+
+    // expects {title: 'Taskmaster goes public!', img_url: 'https://taskmaster.com/press', user_id: 1}
+    const postData = await Post.create({
+      title: req.body.title,
+      img_url: req.body.img_url,
+      from_user_id: req.session.user_id,
+      to_user_id: to_user.id
+    })
+    res.json(postData)
+  } catch (err) {
+    console.log(err);
+    res.status(500).json(err);
+  }
 });
 
 
