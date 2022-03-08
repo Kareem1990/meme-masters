@@ -1,4 +1,4 @@
-# meme-massager
+# meme-masters
 [![License: ISC](https://img.shields.io/badge/License-ISC-blue.svg)](https://opensource.org/licenses/ISC)
 # Description
 This is an app where you can send strictly memes to friends. Just sign up or log in and start sharing the laughs.  

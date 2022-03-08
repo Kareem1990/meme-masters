@@ -22,22 +22,8 @@ router.get('/:id', (req, res) => {
     include: [
       {
         model: Post,
-        attributes: ['id', 'title', 'post_url', 'created_at']
+        attributes: ['id', 'title', 'img_url', 'created_at']
       },
-      {
-        model: Comment,
-        attributes: ['id', 'comment_text', 'created_at'],
-        include: {
-          model: Post,
-          attributes: ['title']
-        }
-      },
-      {
-        model: Post,
-        attributes: ['title'],
-        through: Vote,
-        as: 'voted_posts'
-      }
     ]
   })
     .then(dbUserData => {
@@ -62,7 +48,7 @@ router.post('/', (req, res) => {
   })
     .then(dbUserData => {
       req.session.save(() => {
-        req.session.user_id = dbUserData.id;
+        req.session.id = dbUserData.id;
         req.session.username = dbUserData.username;
         req.session.loggedIn = true;
   
