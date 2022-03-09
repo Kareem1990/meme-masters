@@ -36,7 +36,7 @@ router.get('/', withAuth, (req, res) => {
     });
 });
 
-router.delete('/delete/:id', withAuth, (req, res) => {
+router.delete('/:id', withAuth, (req, res) => {
   console.log('id', req.params.id);
   Post.destroy({
     where: {
