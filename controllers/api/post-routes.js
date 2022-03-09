@@ -2,7 +2,7 @@ const router = require('express').Router();
 const sequelize = require('../../config/connection');
 const { Post, User } = require('../../models');
 const withAuth = require('../../utils/auth');
-const nodemailer = require('nodemailer');
+
 
 // get all users
 router.get('/', (req, res) => {
@@ -81,34 +81,6 @@ router.post('/', async (req, res) => {
     res.status(500).json(err);
   }
 });
-
-//Email Code
-
-const transporter = nodemailer.createTransport({
-  port: 465,
-  service: "hotmail",
-     auth: {
-          user: 'ryantest9000@outlook.com',
-          pass: 'TestPass178',
-       },
-       secure: true,     
-  });
-
-  const emailData = {
-    from: 'ryantest9000@outlook.com',  // sender address
-      to: 'ryan.robinsonlb@gmail.com',   // list of receivers
-      subject: 'Someone sent you a funny meme!',
-      text: 'You got a meme!'
-    };
-
-  transporter.sendMail(emailData, function (err, info) {
-      if(err)
-        console.log(err)
-      else
-        console.log(info);
-   });   
-    
-//End email code
 
 router.put('/:id', withAuth, (req, res) => {
   Post.update(
