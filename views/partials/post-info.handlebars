@@ -1,11 +1,15 @@
 <article class="post">
   <div class="title">
-    <img src="{{img_url}}" target="_blank">{{title}}>
+    <img src="{{img_url}}" target="_blank">
+    <br>
+    {{title}}
     <span>({{format_url img_url}})</span>
   </div>
   <div class="meta">
-    {{vote_count}} {{format_plural "point" vote_count}} by {{user.username}} on {{format_date created_at}}
+by {{user.username}} on {{format_date created_at}}
     |
-    <a href="/post/{{id}}">{{comments.length}} {{format_plural "comment" comments.length}}</a>
+    <a href="/post/{{id}}"></a>
   </div>
 </article>
+
+
