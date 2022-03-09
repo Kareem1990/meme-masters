@@ -1,8 +1,10 @@
+console.log("anything!!!!!");
 async function newFormHandler(event) {
+  console.log("SOMETHING");
   event.preventDefault();
 
-  const title = document.querySelector('input[name="post-title"]').value;
-  const img_url = document.querySelector('input[name="img-url"]').value;
+  const title = document.querySelector('input[name="user-handle"]').value;
+  const img_url = document.querySelector('input[name="post-url"]').value;
 
   const response = await fetch(`/api/posts`, {
     method: 'POST',
