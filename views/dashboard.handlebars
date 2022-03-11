@@ -21,7 +21,7 @@
     {{#each posts as |post|}}
     <li>
       {{> post-info post}}
-      <button type="button" href="/dashboard/{{post.id}}" class="delete-post-btn">Delete post</button>
+      <button type="button" data-id="{{post.id}}" class="delete-post-btn">Delete post</button>
     </li>
     {{/each}}
   </ul>
