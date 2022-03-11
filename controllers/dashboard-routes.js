@@ -8,9 +8,6 @@ router.get('/', withAuth, (req, res) => {
   console.log(req.session);
   console.log('======================');
   Post.findAll({
-    where: {
-      to_user_id: req.session.user_id
-    },
     attributes: [
       'id',
       'img_url',
