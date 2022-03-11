@@ -3,29 +3,30 @@
 
   <form class="new-post-form">
     <div>
-      <label for="share-to">Share with</label>
-      <input type="text" id="user-handle" name="user-handle" />
-    </div>
-    <div>
       <label for="post-url">Enter meme link here!</label>
       <input id="post-url" name="post-url" />
     </div>
-    <button type="submit" class="btn">Upload</button>
+        <div>
+      <label for="share-to">Share with</label>
+      <input type="text" id="user-handle" name="user-handle" />
+    </div>
+    <button type="submit" class="btn btn-secondary">Share</button>
   </form>
 </section>
 
 {{#if posts.length}}
 <section>
   <h2>Your Memes</h2>
-  <ol>
+  <ul>
     {{#each posts as |post|}}
     <li>
       {{> post-info post}}
-      <a href="/dashboard/edit/{{post.id}}" class="edit-link">Edit post</a>
+      <button type="button" href="/dashboard/{{post.id}}" class="delete-post-btn">Delete post</button>
     </li>
     {{/each}}
-  </ol>
+  </ul>
 </section>
 {{/if}}
 
 <script src="/javascript/add-post.js"></script>
+<script src="/javascript/delete-post.js"></script>

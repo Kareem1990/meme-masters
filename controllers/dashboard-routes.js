@@ -8,9 +8,6 @@ router.get('/', withAuth, (req, res) => {
   console.log(req.session);
   console.log('======================');
   Post.findAll({
-    where: {
-      to_user_id: req.session.user_id
-    },
     attributes: [
       'id',
       'img_url',
@@ -28,6 +25,7 @@ router.get('/', withAuth, (req, res) => {
   })
     .then(dbPostData => {
       const posts = dbPostData.map(post => post.get({ plain: true }));
+      console.log(posts);
       res.render('dashboard', { posts, loggedIn: true });
     })
     .catch(err => {
@@ -36,6 +34,24 @@ router.get('/', withAuth, (req, res) => {
     });
 });
 
-
+router.delete('/:id', withAuth, (req, res) => {
+  console.log('id', req.params.id);
+  Post.destroy({
+    where: {
+      id: req.params.id
+    }
+  })
+    .then(dbPostData => {
+      if (!dbPostData) {
+        res.status(404).json({ message: 'No post found with this id' });
+        return;
+      }
+      res.json(dbPostData);
+    })
+    .catch(err => {
+      console.log(err);
+      res.status(500).json(err);
+    });
+});
 
 module.exports = router;
