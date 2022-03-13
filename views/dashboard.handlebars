@@ -15,13 +15,13 @@
 </section>
 
 {{#if posts.length}}
-<section>
+<section class="container">
   <h2>Your Memes</h2>
-  <ul>
+  <ul class="list-unstyled row">
     {{#each posts as |post|}}
-    <li>
+    <li class="col-4 mb-2">
       {{> post-info post}}
-      <button type="button" href="/dashboard/{{post.id}}" class="delete-post-btn">Delete post</button>
+      <button type="button" data-id="{{post.id}}" class="delete-post-btn">Delete post</button>
     </li>
     {{/each}}
   </ul>

@@ -59,7 +59,6 @@ router.get('/:id', (req, res) => {
 });
 
 router.post('/', (req, res) => {
-  // expects {title: 'Meme-masters goes public!', img_url: 'https://meme-masters.com/press', user_id: 1}
   Post.create({
     title: req.body.title,
     img_url: req.body.img_url,
@@ -97,24 +96,24 @@ router.put('/:id', withAuth, (req, res) => {
     });
 });
 
-// router.delete('/:id', withAuth, (req, res) => {
-//   console.log('id', req.params.id);
-//   Post.destroy({
-//     where: {
-//       id: req.params.id
-//     }
-//   })
-//     .then(dbPostData => {
-//       if (!dbPostData) {
-//         res.status(404).json({ message: 'No post found with this id' });
-//         return;
-//       }
-//       res.json(dbPostData);
-//     })
-//     .catch(err => {
-//       console.log(err);
-//       res.status(500).json(err);
-//     });
-// });
+router.delete('/:id', withAuth, (req, res) => {
+  console.log('id', req.params.id);
+  Post.destroy({
+    where: {
+      id: req.params.id
+    }
+  })
+    .then(dbPostData => {
+      if (!dbPostData) {
+        res.status(404).json({ message: 'No post found with this id' });
+        return;
+      }
+      res.json(dbPostData);
+    })
+    .catch(err => {
+      console.log(err);
+      res.status(500).json(err);
+    });
+});
 
 module.exports = router;
