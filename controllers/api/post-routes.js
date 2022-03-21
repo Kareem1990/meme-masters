@@ -1,96 +1,100 @@
-const router = require('express').Router();
-const sequelize = require('../../config/connection');
-const { Post, User } = require('../../models');
-const withAuth = require('../../utils/auth');
+const router = require("express").Router();
+const sequelize = require("../../config/connection");
+const { Post, User } = require("../../models");
+const withAuth = require("../../utils/auth");
 
 // get all users
-router.get('/', (req, res) => {
-  console.log('======================');
+router.get("/", (req, res) => {
+  console.log("======================");
   Post.findAll({
-    attributes: [
-      'id',
-      'img_url',
-      'title',
-      'created_at',
-    ],
+    attributes: ["id", "img_url", "title", "created_at"],
     include: [
       {
         model: User,
-        attributes: ['username']
-      }
-    ]
+        attributes: ["username"],
+      },
+    ],
   })
-    .then(dbPostData => res.json(dbPostData))
-    .catch(err => {
+    .then((dbPostData) => res.json(dbPostData))
+    .catch((err) => {
       console.log(err);
       res.status(500).json(err);
     });
 });
 
-router.get('/:id', (req, res) => {
+router.get("/:id", (req, res) => {
   Post.findOne({
     where: {
-      id: req.params.id
+      id: req.params.id,
     },
-    attributes: [
-      'id',
-      'img_url',
-      'title',
-      'created_at',
-    ],
+    attributes: ["id", "img_url", "title", "created_at"],
     include: [
       {
         model: User,
-        attributes: ['username']
-      }
-    ]
+        attributes: ["username"],
+      },
+    ],
   })
-    .then(dbPostData => {
+    .then((dbPostData) => {
       if (!dbPostData) {
-        res.status(404).json({ message: 'No post found with this id' });
+        res.status(404).json({ message: "No post found with this id" });
         return;
       }
       res.json(dbPostData);
     })
-    .catch(err => {
+    .catch((err) => {
       console.log(err);
       res.status(500).json(err);
     });
 });
 
-router.post('/', (req, res) => {
+router.post("/", async (req, res) => {
+  const toUser = await User.findOne({
+    where: {
+      email: req.body.to_user_email,
+    },
+  });
+  if (toUser === null) {
+    res.sendStatus(404);
+    return;
+  }
   Post.create({
     title: req.body.title,
     img_url: req.body.img_url,
-    user_id: req.session.user_id
+    from_user_id: req.session.user_id,
+    to_user_id: toUser.id,
   })
-    .then(dbPostData => res.json(dbPostData))
-    .catch(err => {
+    .then((dbPostData) => res.json(dbPostData))
+    .catch((err) => {
       console.log(err);
-      res.status(500).json(err);
+      console.log(err.name);
+      if (err.name === "SequelizeValidationError") {
+        res.sendStatus(400);
+      } else {
+        res.status(500).json(err);
+      }
     });
 });
 
-
-router.put('/:id', withAuth, (req, res) => {
+router.put("/:id", withAuth, (req, res) => {
   Post.update(
     {
-      title: req.body.title
+      title: req.body.title,
     },
     {
       where: {
-        id: req.params.id
-      }
+        id: req.params.id,
+      },
     }
   )
-    .then(dbPostData => {
+    .then((dbPostData) => {
       if (!dbPostData) {
-        res.status(404).json({ message: 'No post found with this id' });
+        res.status(404).json({ message: "No post found with this id" });
         return;
       }
       res.json(dbPostData);
     })
-    .catch(err => {
+    .catch((err) => {
       console.log(err);
       res.status(500).json(err);
     });
