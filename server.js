@@ -20,7 +20,7 @@ const sess = {
 };
 
 app.use(session(sess));
-
+//random test comment
 const helpers = require('./utils/helpers');
 
 const hbs = exphbs.create({ helpers });
